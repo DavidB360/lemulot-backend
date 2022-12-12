@@ -8,9 +8,10 @@ const messageSchema = mongoose.Schema({
 
 const helpRequestSchema = mongoose.Schema({
     title: String,
-    author: String,
+    author: { type: mongoose.Schema.Types.ObjectId, ref: 'users'},
     creationDate: Date,
-    messages: [messageSchema]
+    messages: [messageSchema],
+    helpers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'helpers'}]
 });
 
 const HelpRequest = mongoose.model('helprequests', helpRequestSchema);
