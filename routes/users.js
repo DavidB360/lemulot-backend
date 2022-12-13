@@ -74,4 +74,14 @@ router.get('/canLike/:token', (req, res) => {
   });
 });
 
+// addToFavorites route
+
+// removeFromFavorites route
+
+// addToHelpRequests route
+
+// addMessage
+
+// editHelpRequestStatus
+
 module.exports = router;
