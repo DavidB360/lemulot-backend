@@ -4,7 +4,10 @@ const tutorialSchema = mongoose.Schema({
     title: String,
     author: String,
     creationDate: Date,
-    link: String
+    device: String,
+    category: String,
+    difficulty: String,
+    content: String
 });
 
 const Tutorial = mongoose.model('tutorials', tutorialSchema);
