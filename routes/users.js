@@ -14,8 +14,8 @@ router.post('/signup', (req, res) => {
     res.json({ result: false, error: 'Missing or empty fields' });
     return;
   }
-  // Check if the user has not already been registered
-  User.findOne({ email: req.body.email }).then(data => {
+  // Check if the user has not already been registered (search for email and phone number in data base)
+  User.findOne({ $or: [{email: req.body.email }, {phoneNumber: req.body.phoneNumber}] }).then(data => {
     if (data === null) {
       // hash password
       const hash = bcrypt.hashSync(req.body.password, 10);
@@ -41,19 +41,20 @@ router.post('/signup', (req, res) => {
       });
     } else {
       // User already exists in database
-      res.json({ result: false, error: 'User already exists' });
+      res.json({ result: false, error: 'User already exists as email or phone number is already registered in data base' });
     }
   });
 });
 
 // signin route
 router.post('/signin', (req, res) => {
-  //use module checkbody to detect empty fields
+  // use module checkbody to detect empty fields
   if (!checkBody(req.body, ['email', 'password'])) {
     res.json({ result: false, error: 'Missing or empty fields' });
     return;
   }
-  User.findOne({ email: req.body.email }).then(data => {
+  // allow connection with both email or phone number
+  User.findOne({$or: [{ email: req.body.email }, { phoneNumber: req.body.email }]}).then(data => {
     // check password
     if (data && bcrypt.compareSync(req.body.password, data.password)) {
       res.json({ result: true, token: data.token });
