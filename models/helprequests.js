@@ -10,7 +10,7 @@ const helpRequestSchema = mongoose.Schema({
     title: String,
     author: { type: mongoose.Schema.Types.ObjectId, ref: 'users'},
     creationDate: Date,
-    status: String,
+    isSolved: Boolean,
     messages: [messageSchema],
     helpers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'helpers'}]
 });

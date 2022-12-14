@@ -76,13 +76,57 @@ router.get('/canLike/:token', (req, res) => {
 });
 
 // addToFavorites route
-
+router.put('/addToFavorites/:token/:tutorialId', (req, res) => {
+  // udpateOne(<filter>,<update>) : we search user by token, then update by adding
+  // new tutorial ID at the end of favoriteLessons array
+  User.updateOne( { token: req.params.token }, { $push: { favoriteLessons: req.params.tutorialId } })
+    .then(() => {
+      User.findOne({ token: req.params.token })
+        .then(data => {
+          // console.log(data.favoriteLessons);
+          if (data.favoriteLessons.includes(req.params.tutorialId)) {
+            res.json({ result: true, event: 'tutorial added to favoriteLessons' });
+          } else {
+            res.json({ result: false, error: 'tutorial can\'t be added to favoriteLessons' });
+          }
+        });
+    });
+});
+ 
 // removeFromFavorites route
+router.delete('/removeFromFavorites/:token/:tutorialId', (req, res) => {
+  // udpateOne(<filter>,<update>) : we search user by token, then remove from favoriteLessons array
+  // the tutorial selected by its ID
+  User.updateOne( { token: req.params.token }, { $pull: { favoriteLessons: req.params.tutorialId } })
+    .then(() => {
+      User.findOne({ token: req.params.token })
+        .then(data => {
+          // console.log(data.favoriteLessons);
+          if (data.favoriteLessons.includes(req.params.tutorialId)) {
+            res.json({ result: false, error: 'tutorial can\'t be removed from favoriteLessons' });
+          } else {
+            res.json({ result: true, event: 'tutorial successfully removed from favoriteLessons' });
+          }
+        });
+    });
+});
 
 // addToHelpRequests route
-
-// addMessage
-
-// editHelpRequestStatus
+router.put('/addToHelpRequests/:token/:helpRequestId', (req, res) => {
+  // udpateOne(<filter>,<update>) : we search user by token, then update by adding
+  // new help request ID at the end of helpRequests array
+  User.updateOne( { token: req.params.token }, { $push: { helpRequests: req.params.helpRequestId } })
+    .then(() => {
+      User.findOne({ token: req.params.token })
+        .then(data => {
+          // console.log(data.favoriteLessons);
+          if (data.helpRequests.includes(req.params.helpRequestId)) {
+            res.json({ result: true, event: 'help request added to personal help requests list' });
+          } else {
+            res.json({ result: false, error: 'help request can\'t be added to personal help requests list' });
+          }
+        });
+    });
+});
 
 module.exports = router;
