@@ -35,9 +35,9 @@ router.post('/signup', (req, res) => {
         favoriteLessons: [],
         helpRequests: []
       });
-      newUser.save().then(newDoc => {
+      newUser.save().then(newUser => {
         // return result true and token when new user saved in data base
-        res.json({ result: true, token: newDoc.token });
+        res.json({ result: true, token: newUser.token, firstName: newUser.firstName, lastName: newUser.lastName });
       });
     } else {
       // User already exists in database
