@@ -36,7 +36,7 @@ router.post('/signup', (req, res) => {
         helpRequests: []
       });
       newUser.save().then(newUser => {
-        // return result true and token when new user saved in data base
+        // return result true and user informations (token, name) when new user saved in data base
         res.json({ result: true, token: newUser.token, firstName: newUser.firstName, lastName: newUser.lastName });
       });
     } else {
@@ -57,6 +57,7 @@ router.post('/signin', (req, res) => {
   User.findOne({$or: [{ email: req.body.email }, { phoneNumber: req.body.email }]}).then(data => {
     // check password
     if (data && bcrypt.compareSync(req.body.password, data.password)) {
+      // return result true and user informations (token, name, favorite lessons array, ...) if login successful
       res.json({ result: true, token: data.token, firstName: data.firstName, lastName: data.lastName, favoriteLessons: data.favoriteLessons });
     } else {
       res.json({ result: false, error: 'User not found or wrong password' });
