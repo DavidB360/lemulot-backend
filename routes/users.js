@@ -11,7 +11,7 @@ const bcrypt = require('bcrypt');
 router.post('/signup', (req, res) => {
   // use module checkbody to detect empty fields
   if (!checkBody(req.body, ['email', 'password', 'lastName', 'firstName', 'zipCode', 'city', 'phoneNumber'])) {
-    res.json({ result: false, error: 'Missing or empty fields' });
+    res.json({ result: false, error: 'Champs vides ou manquants' });
     return;
   }
   // Check if the user has not already been registered (search for email and phone number in data base)
@@ -41,7 +41,7 @@ router.post('/signup', (req, res) => {
       });
     } else {
       // User already exists in database
-      res.json({ result: false, error: 'User already exists as email or phone number is already registered in data base' });
+      res.json({ result: false, error: 'L\'email ou le numéro de téléphone sont déjà enregistrés dans la base de données.' });
     }
   });
 });
@@ -50,7 +50,7 @@ router.post('/signup', (req, res) => {
 router.post('/signin', (req, res) => {
   // use module checkbody to detect empty fields
   if (!checkBody(req.body, ['email', 'password'])) {
-    res.json({ result: false, error: 'Missing or empty fields' });
+    res.json({ result: false, error: 'Formulaire incomplet, merci de renseigner toutes les informations requises' });
     return;
   }
   // allow connection with both email or phone number
@@ -60,7 +60,7 @@ router.post('/signin', (req, res) => {
       // return result true and user informations (token, name, favorite lessons array, ...) if login successful
       res.json({ result: true, token: data.token, firstName: data.firstName, lastName: data.lastName, favoriteLessons: data.favoriteLessons });
     } else {
-      res.json({ result: false, error: 'User not found or wrong password' });
+      res.json({ result: false, error: 'Utilisateur ou mot de passe non valide' });
     }
   });
 });
@@ -71,7 +71,7 @@ router.get('/canLike/:token', (req, res) => {
     if (data) {
       res.json({ result: true, canLike: data.canLike });
     } else {
-      res.json({ result: false, error: 'User not found' });
+      res.json({ result: false, error: 'Utilisateur non trouvé' });
     }
   });
 });
@@ -86,9 +86,9 @@ router.put('/addToFavorites/:token/:tutorialId', (req, res) => {
         .then(data => {
           // console.log(data.favoriteLessons);
           if (data.favoriteLessons.includes(req.params.tutorialId)) {
-            res.json({ result: true, event: 'tutorial added to favoriteLessons' });
+            res.json({ result: true, event: 'Tutoriel ajouté aux leçons favorites' });
           } else {
-            res.json({ result: false, error: 'tutorial can\'t be added to favoriteLessons' });
+            res.json({ result: false, error: 'Le tutoriel ne peut-être ajouté à vos favoris' });
           }
         });
     });
@@ -104,9 +104,9 @@ router.delete('/removeFromFavorites/:token/:tutorialId', (req, res) => {
         .then(data => {
           // console.log(data.favoriteLessons);
           if (data.favoriteLessons.includes(req.params.tutorialId)) {
-            res.json({ result: false, error: 'tutorial can\'t be removed from favoriteLessons' });
+            res.json({ result: false, error: 'Le tutoriel n\'a pas été supprimé' });
           } else {
-            res.json({ result: true, event: 'tutorial successfully removed from favoriteLessons' });
+            res.json({ result: true, event: 'Tutoriel supprimé de la liste des favoris' });
           }
         });
     });
@@ -122,9 +122,9 @@ router.put('/addToHelpRequests/:token/:helpRequestId', (req, res) => {
         .then(data => {
           // console.log(data.favoriteLessons);
           if (data.helpRequests.includes(req.params.helpRequestId)) {
-            res.json({ result: true, event: 'help request added to personal help requests list' });
+            res.json({ result: true, event: 'Demande d\'aide ajoutée à liste de demandes personnelles' });
           } else {
-            res.json({ result: false, error: 'help request can\'t be added to personal help requests list' });
+            res.json({ result: false, error: 'La demande d\'aide n\'a pu être ajoutée à la liste de demandes personnelles' });
           }
         });
     });
