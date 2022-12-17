@@ -48,7 +48,7 @@ router.get('/', (req, res) => {
 });
 
 // get tutorials sorted by device route
-router.get('/byDevice/:device', (req, res) => {
+router.get('/filter/:device', (req, res) => {
     Tutorial.find({device: req.params.device}).then(data => {
       if (data) {
         res.json({ result: true, tutorials: data });
@@ -59,12 +59,23 @@ router.get('/byDevice/:device', (req, res) => {
 });
 
 // get tutorials sorted by device and category route
-router.get('/byDeviceAndCategory/:device/:category', (req, res) => {
+router.get('/filter/:device/:category', (req, res) => {
     Tutorial.find({device: req.params.device, category: req.params.category}).then(data => {
       if (data) {
         res.json({ result: true, tutorials: data });
       } else {
         res.json({ result: false, error: 'tutoriels non trouvés' });
+      }
+    });
+});
+
+// get tutorials by Id route
+router.get('/tutoId/:id', (req, res) => {
+    Tutorial.find({_id: req.params.id}).then(data => {
+      if (data) {
+        res.json({ result: true, tutorial: data });
+      } else {
+        res.json({ result: false, error: 'tutoriel non trouvé' });
       }
     });
 });
