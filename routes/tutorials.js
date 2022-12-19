@@ -71,7 +71,7 @@ router.get('/filter/:device/:category', (req, res) => {
 
 // get tutorials by Id route
 router.get('/tutoId/:id', (req, res) => {
-    Tutorial.find({_id: req.params.id}).then(data => {
+    Tutorial.findOne({_id: req.params.id}).then(data => {
       if (data) {
         res.json({ result: true, tutorial: data });
       } else {
