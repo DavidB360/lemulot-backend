@@ -76,6 +76,18 @@ router.get('/canLike/:token', (req, res) => {
   });
 });
 
+// favoriteTutorials route
+router.get('/favoriteTutorials/:token', (req, res) => {
+  User.findOne({ token: req.params.token }).populate('favoriteLessons')
+  .then(data => {
+    if (data) {
+      res.json({ result: true, favoriteTutorials: data.favoriteLessons });
+    } else {
+      res.json({ result: false, error: 'Utilisateur non trouvé' });
+    }
+  });
+});
+
 // addToFavorites route
 router.put('/addToFavorites/:token/:tutorialId', (req, res) => {
   // udpateOne(<filter>,<update>) : we search user by token, then update by adding
