@@ -6,6 +6,9 @@ require('../models/connection');
 const Tutorial = require('../models/tutorials');
 
 // new tutorial route
+// this is the intitation of the tutorial with a contant made of one text object.
+// to continue to build the tutorial with additional text objects and pictures, 
+// use the addElementToTutorial route
 router.post('/addTutorial', (req, res) => {
     // use module checkbody to detect empty fields
     if (!checkBody(req.body, ['title', 'author', 'device', 'category', 'difficulty', 'content'])) {
@@ -36,6 +39,25 @@ router.post('/addTutorial', (req, res) => {
     }
     });
 });
+
+// route to add text or picture element to a tutorial identified by its id
+// to insert text, just fill content field with it and set the type to 'text'
+// to insert a picture, its url has to be set in the content field and the type set to 'image'
+router.post('/addElementToTutorial', (req, res) => {
+  // use module checkbody to detect empty fields
+  if (!checkBody(req.body, ['tutorialId', 'type', 'content'])) {
+      res.json({ result: false, error: 'Champ vide ou manquant' });
+      return;
+  }
+  Tutorial.updateOne( { _id: req.body.tutorialId }, { $push: { content: { type: req.body.type, content: req.body.content } }})
+    .then(() => {
+      Tutorial.findOne({_id: req.body.tutorialId })
+      .then((data) => {
+        res.json({ result: true, newContent: data.content });
+      });
+  });
+});
+
 
 // get all tutorials route
 router.get('/', (req, res) => {
