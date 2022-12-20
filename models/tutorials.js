@@ -1,5 +1,10 @@
 const mongoose = require('mongoose');
 
+const contentSchema = mongoose.Schema({
+    type: String,
+    content: String
+});
+
 const tutorialSchema = mongoose.Schema({
     title: String,
     author: String,
@@ -7,7 +12,7 @@ const tutorialSchema = mongoose.Schema({
     device: String,
     category: String,
     difficulty: String,
-    content: String
+    content: [contentSchema],
 });
 
 const Tutorial = mongoose.model('tutorials', tutorialSchema);

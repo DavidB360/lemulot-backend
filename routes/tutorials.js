@@ -23,7 +23,8 @@ router.post('/addTutorial', (req, res) => {
             device: req.body.device,
             category: req.body.category,
             difficulty: req.body.difficulty,
-            content: req.body.content
+            // content: req.body.content,
+            content: { type: 'text', content: req.body.content}
         });
         newTutorial.save().then(newtuto => {
         // return result true and event message
