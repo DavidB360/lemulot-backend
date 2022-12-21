@@ -58,7 +58,14 @@ router.post('/signin', (req, res) => {
     // check password
     if (data && bcrypt.compareSync(req.body.password, data.password)) {
       // return result true and user informations (token, name, favorite lessons array, ...) if login successful
-      res.json({ result: true, token: data.token, firstName: data.firstName, lastName: data.lastName, favoriteLessons: data.favoriteLessons });
+      res.json({ 
+        result: true,
+        token: data.token,
+        firstName: data.firstName,
+        lastName: data.lastName,
+        favoriteLessons: data.favoriteLessons,
+        avatar: data.avatar,
+       });
     } else {
       res.json({ result: false, error: 'Utilisateur ou mot de passe non valide' });
     }
@@ -140,6 +147,16 @@ router.put('/addToHelpRequests/:token/:helpRequestId', (req, res) => {
           }
         });
     });
+});
+
+// updateAvatar route
+router.put('/updateAvatar', (req, res) => {
+  if (!checkBody(req.body, ['token', 'url'])) {
+    res.json({ result: false, error: 'Formulaire incomplet, merci de renseigner toutes les informations requises' });
+    return;
+  }
+  User.updateOne( {token: req.body.token}, {avatar: req.body.url} )
+    .then (() => res.json({ event: 'Image de profil modifiée'}))
 });
 
 module.exports = router;
