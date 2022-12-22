@@ -156,7 +156,16 @@ router.put('/updateAvatar', (req, res) => {
     return;
   }
   User.updateOne( {token: req.body.token}, {avatar: req.body.url} )
-    .then (() => res.json({ event: 'Image de profil modifiée'}))
+    .then (() => {
+      User.findOne({ token: req.body.token })
+      .then (data => {
+        if (data.avatar === req.body.url) {
+          res.json({ result: 'true',  event: 'Image de profil modifiée', url: data.avatar})
+        } else {
+          res.json({ result: 'false',  error: 'Echec de la mise à jour de la photo de profil'})
+        }
+      })
+    })
 });
 
 module.exports = router;

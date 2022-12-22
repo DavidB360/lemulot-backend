@@ -13,7 +13,10 @@ var tutorialsRouter = require('./routes/tutorials');
 var helprequestsRouter = require('./routes/helprequests');
 
 var app = express();
-
+// pour upload photos vers cloudinary
+const fileUpload = require('express-fileupload');
+app.use(fileUpload());
+//
 const cors = require('cors');
 app.use(cors());
 

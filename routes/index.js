@@ -14,6 +14,7 @@ router.post('/uploadPic', async (req, res) => {
     if(!resultMove) {
         // si la copie s'est bien passée, on envoie la photo sur cloudinary et on efface la photo temporaire avec fs
         const resultCloudinary = await cloudinary.uploader.upload(photoPath, {folder : "lemulot/"});
+        // const resultCloudinary = await cloudinary.uploader.upload(photoPath);
         fs.unlinkSync(photoPath);
         res.json({ result: true, url: resultCloudinary.secure_url });
     } else {
