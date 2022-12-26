@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const messageSchema = mongoose.Schema({
-    author: String,
+    author: { type: mongoose.Schema.Types.ObjectId, ref: 'users'} | { type: mongoose.Schema.Types.ObjectId, ref: 'helpers'},
     messageTime: Date,
     content: String
 });

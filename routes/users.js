@@ -131,6 +131,18 @@ router.delete('/removeFromFavorites/:token/:tutorialId', (req, res) => {
     });
 });
 
+// Personnal helpRequests list route
+router.get('/myHelpRequests/:token', (req, res) => {
+  User.findOne({ token: req.params.token }).populate('helpRequests')
+  .then(data => {
+    if (data) {
+      res.json({ result: true, myHelpRequests: data.helpRequests });
+    } else {
+      res.json({ result: false, error: 'Utilisateur non trouvé' });
+    }
+  });
+});
+
 // addToHelpRequests route
 router.put('/addToHelpRequests/:token/:helpRequestId', (req, res) => {
   // udpateOne(<filter>,<update>) : we search user by token, then update by adding
