@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const messageSchema = mongoose.Schema({
     author: { type: mongoose.Schema.Types.ObjectId, ref: 'users'} | { type: mongoose.Schema.Types.ObjectId, ref: 'helpers'},
     messageTime: Date,
+    type: String,
     content: String
 });
 
@@ -11,6 +12,8 @@ const helpRequestSchema = mongoose.Schema({
     author: { type: mongoose.Schema.Types.ObjectId, ref: 'users'},
     creationDate: Date,
     isSolved: Boolean,
+    device: String,
+    category: String,
     messages: [messageSchema],
     helpers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'helpers'}]
 });
