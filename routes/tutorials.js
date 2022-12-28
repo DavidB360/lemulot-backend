@@ -6,7 +6,7 @@ require('../models/connection');
 const Tutorial = require('../models/tutorials');
 
 // new tutorial route
-// this is the intitation of the tutorial with a contant made of one text object.
+// this is the intitation of the tutorial with a content made of one text object.
 // to continue to build the tutorial with additional text objects and pictures, 
 // use the addElementToTutorial route
 router.post('/addTutorial', (req, res) => {
@@ -26,8 +26,7 @@ router.post('/addTutorial', (req, res) => {
             device: req.body.device,
             category: req.body.category,
             difficulty: req.body.difficulty,
-            // content: req.body.content,
-            content: { type: 'text', content: req.body.content}
+            content: [ { type: 'text', content: req.body.content } ]
         });
         newTutorial.save().then(newtuto => {
         // return result true and event message

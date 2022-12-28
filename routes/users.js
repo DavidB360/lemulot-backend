@@ -25,7 +25,7 @@ router.post('/signup', (req, res) => {
         password: hash,
         lastName: req.body.lastName,
         firstName: req.body.firstName,
-        zipcode: req.body.zipcode,
+        zipCode: req.body.zipcode,
         city: req.body.city,
         phoneNumber: req.body.phoneNumber,
         // generate token
