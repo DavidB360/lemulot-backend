@@ -41,13 +41,14 @@ router.post('/newHelpRequest', (req, res) => {
 // to insert a picture, its url has to be set in the content field and the type set to 'image'
 router.post('/addMessage', (req, res) => {
     // use module checkbody to detect empty fields
-    if (!checkBody(req.body, ['helpRequestId', 'author', 'type', 'content'])) {
+    if (!checkBody(req.body, ['helpRequestId', 'authorType', 'authorId', 'type', 'content'])) {
         res.json({ result: false, error: 'Champ vide ou manquant' });
         return;
     }
     HelpRequest.updateOne( { _id: req.body.helpRequestId }, { 
-        $push: { messages: {
-                                author: req.body.author,
+        $push: { messages: { 
+                                authorType: req.body.authorType,
+                                authorId: req.body.authorId,
                                 messageTime: Date.now(),
                                 type: req.body.type,
                                 content: req.body.content 
@@ -94,7 +95,7 @@ router.get('/isSolved/:status', (req, res) => {
 
 // get help request by Id route
 router.get('/getById/:helpRequestId', (req, res) => {
-    HelpRequest.findOne({_id: req.params.helpRequestId}).then(data => {
+    HelpRequest.findOne({_id: req.params.helpRequestId}).populate('author').then(data => {
       if (data) {
         res.json({ result: true, helpRequest: data });
       } else {
