@@ -11,6 +11,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var tutorialsRouter = require('./routes/tutorials');
 var helprequestsRouter = require('./routes/helprequests');
+var helpersRouter = require('./routes/helpers');
 
 var app = express();
 // pour upload photos vers cloudinary
@@ -31,5 +32,6 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/tutorials', tutorialsRouter);
 app.use('/helprequests', helprequestsRouter)
+app.use('/helpers', helpersRouter);
 
 module.exports = app;

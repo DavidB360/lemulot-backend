@@ -25,7 +25,7 @@ router.post('/signup', (req, res) => {
         password: hash,
         lastName: req.body.lastName,
         firstName: req.body.firstName,
-        zipCode: req.body.zipcode,
+        zipCode: req.body.zipCode,
         city: req.body.city,
         phoneNumber: req.body.phoneNumber,
         // generate token
@@ -41,7 +41,7 @@ router.post('/signup', (req, res) => {
       });
     } else {
       // User already exists in database
-      res.json({ result: false, error: 'L\'email ou le numéro de téléphone sont déjà enregistrés dans la base de données.' });
+      res.json({ result: false, error: 'L\'email ou le numéro de téléphone est déjà enregistré dans la base de données.' });
     }
   });
 });
@@ -151,7 +151,6 @@ router.put('/addToHelpRequests/:token/:helpRequestId', (req, res) => {
     .then(() => {
       User.findOne({ token: req.params.token })
         .then(data => {
-          // console.log(data.favoriteLessons);
           if (data.helpRequests.includes(req.params.helpRequestId)) {
             res.json({ result: true, event: 'Demande d\'aide ajoutée à liste de demandes personnelles' });
           } else {
