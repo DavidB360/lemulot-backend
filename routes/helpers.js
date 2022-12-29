@@ -109,9 +109,9 @@ router.put('/updateAvatar', (req, res) => {
       Helper.findOne({ token: req.body.token })
       .then (data => {
         if (data.avatar === req.body.url) {
-          res.json({ result: 'true',  event: 'Image de profil modifiée', url: data.avatar})
+          res.json({ result: true,  event: 'Image de profil modifiée', url: data.avatar})
         } else {
-          res.json({ result: 'false',  error: 'Echec de la mise à jour de la photo de profil'})
+          res.json({ result: false,  error: 'Echec de la mise à jour de la photo de profil'})
         }
       })
     })
@@ -122,9 +122,9 @@ router.get('/getHelperId/:token', (req, res) => {
   Helper.findOne({ token: req.params.token })
     .then(data => {
       if (data) {
-        res.json({ result: 'true',  helperId: data._id})
+        res.json({ result: true,  helperId: data._id})
       } else {
-        res.json({ result: 'false',  error: 'Aideur non trouvé'})
+        res.json({ result: false,  error: 'Aideur non trouvé'})
       }
     });
 });
