@@ -179,4 +179,17 @@ router.put('/updateAvatar', (req, res) => {
     })
 });
 
+// get user ID route
+router.get('/getUserId/:token', (req, res) => {
+  User.findOne({ token: req.params.token })
+    .then(data => {
+      if (data) {
+        res.json({ result: 'true',  userId: data._id})
+      } else {
+        res.json({ result: 'false',  error: 'Utilisateur non trouvé'})
+      }
+    });
+});
+
+
 module.exports = router;

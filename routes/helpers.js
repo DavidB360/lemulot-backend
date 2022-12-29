@@ -117,4 +117,16 @@ router.put('/updateAvatar', (req, res) => {
     })
 });
 
+// get helper ID route
+router.get('/getHelperId/:token', (req, res) => {
+  Helper.findOne({ token: req.params.token })
+    .then(data => {
+      if (data) {
+        res.json({ result: 'true',  helperId: data._id})
+      } else {
+        res.json({ result: 'false',  error: 'Aideur non trouvé'})
+      }
+    });
+});
+
 module.exports = router;
