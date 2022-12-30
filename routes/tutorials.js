@@ -6,7 +6,7 @@ require('../models/connection');
 const Tutorial = require('../models/tutorials');
 
 // new tutorial route
-// this is the intitation of the tutorial with a content made of one text object.
+// this is the initiation of the tutorial with a content made of one text object.
 // to continue to build the tutorial with additional text objects and pictures, 
 // use the addElementToTutorial route
 router.post('/addTutorial', (req, res) => {
