@@ -95,9 +95,7 @@ router.get('/isSolved/:status', (req, res) => {
 
 // get help request by Id route
 router.get('/getById/:helpRequestId', (req, res) => {
-    HelpRequest.findOne({_id: req.params.helpRequestId}).populate({
-      path: 'messages.0.authorId' // ne fonctionne pas pour dérouler authorId, à creuser
-    }).then(data => {
+    HelpRequest.findOne({_id: req.params.helpRequestId}).then(data => {
       if (data) {
         res.json({ result: true, helpRequest: data });
       } else {
