@@ -19,7 +19,7 @@ router.post('/uploadPic', async (req, res) => {
         // console.log(resultCloudinary);
         res.json({ result: true, url: resultCloudinary.secure_url });
     } else {
-        res.json({ result: false, error: resultCopy });
+        res.json({ result: false, error: resultMove });
     }
 });
 //
