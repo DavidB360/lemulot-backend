@@ -5,7 +5,7 @@ const fs = require('fs');
 const uniqid = require('uniqid');
 
 router.post('/uploadPic', async (req, res) => {
-    
+    console.log('route uploadPic lancée');
     // sauvegarde temporaire de la photo sur le backend récupérée via la props photoFromFront à définir côté frontend à l'envoi du POST
     // on génère un nom unique des fois que plusieurs utilisateurs utilisent en même temps l'app et écrasent la photo avant qu'elle n'ait été envoyée
     const photoPath = `./tmp/${uniqid()}.jpg`;
