@@ -9,7 +9,7 @@ router.post('/uploadPic', async (req, res) => {
     // sauvegarde temporaire de la photo sur le backend récupérée via la props photoFromFront à définir côté frontend à l'envoi du POST
     // on génère un nom unique pour prévoir le cas où plusieurs utilisateurs utilisent en même temps l'app et écrasent la photo avant qu'elle n'ait été envoyée
     // const photoPath = `./tmp/${uniqid()}.jpg`;
-    const photoPath = 'temp.jpg';
+    const photoPath = './tmp/temp.jpg';
     const resultMove = await req.files.photoFromFront.mv(photoPath); 
     
     if(!resultMove) {
